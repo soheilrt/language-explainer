@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclas
 from typing import List
 
 
