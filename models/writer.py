@@ -1,4 +1,7 @@
 from abc import abstractmethod, ABC
+from typing import List
+
+from models.word import WordDefinition
 
 
 class Writer(ABC):
@@ -7,7 +10,7 @@ class Writer(ABC):
     """
 
     @abstractmethod
-    def write(self, data):
+    def write(self, data: List[WordDefinition]):
         """
         Write data to a file.
         """
