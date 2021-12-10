@@ -2,6 +2,8 @@ import os
 
 from composer.definition import DefinitionComposer
 from definers.free_dictionary_api import FreeDictionaryDefiner
+from definers.json_storage import JsonDefinerStorage
+from definers.multi_source import MultiSourceDefinerWithStorage
 from middlewares.cefr import CEFRLimiter
 from middlewares.char import CharLengthValidator
 from middlewares.meaningful_words import MeaningfulWords
@@ -21,7 +23,12 @@ class DummyReader(Reader):
 
 def main():
     tokenizer = MWETokenizer()
-    definer = FreeDictionaryDefiner()
+    definer = MultiSourceDefinerWithStorage(
+        storage=JsonDefinerStorage(),
+        definers=[
+            FreeDictionaryDefiner(),
+        ]
+    )
     middlewares = [
         Number(),
         CharLengthValidator(min_length=3),
@@ -31,7 +38,7 @@ def main():
 
     # reader = DummyReader()
     reader = PDFMinerReader(file_path=os.path.join(os.path.dirname(__file__), '../data/atomic-habits.pdf'))
-    writer = JsonFileWriter(file_name="dummy_reader.json", indent=4)
+    writer = JsonFileWriter(file_name="atomic-habits.json", indent=4)
 
     composer = DefinitionComposer(tokenizer=tokenizer, middlewares=middlewares, definer=definer)
     composer.compose_write(reader, writer)
