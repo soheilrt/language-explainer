@@ -1,0 +1,17 @@
+certifi==2021.10.8
+cffi==1.15.0
+chardet==4.0.0
+charset-normalizer==2.0.9
+click==8.0.3
+cryptography==36.0.0
+idna==3.3
+joblib==1.1.0
+nltk==3.6.5
+pdfminer.six==20211012
+pycparser==2.21
+pycryptodome==3.12.0
+pyenchant==3.2.2
+regex==2021.11.10
+requests==2.26.0
+tqdm==4.62.3
+urllib3==1.26.7
