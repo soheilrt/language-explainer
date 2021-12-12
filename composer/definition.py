@@ -14,7 +14,7 @@ class DefinitionComposer(Composer):
     Definition composer class
     """
 
-    def __init__(self, tokenizer: Tokenizer, middlewares: List[Middleware], definer: Definer):
+    def __init__(self, tokenizer: Tokenizer, middlewares: List[Middleware], definer: Definer, verbose: bool = False):
         """
         Definition composer constructor
         :param tokenizer: tokenizes the input
@@ -24,6 +24,7 @@ class DefinitionComposer(Composer):
         self.tokenizer: Tokenizer = tokenizer
         self.middlewares: List[Middleware] = middlewares
         self.definer: Definer = definer
+        self.verbose: bool = verbose
 
     def compose(self, reader: Reader) -> Dict[str, List[WordDefinition]]:
         """
@@ -39,14 +40,16 @@ class DefinitionComposer(Composer):
             print("{} words excluded by {}".format(excluded, middleware.__class__.__name__))
 
         print("words remained: {}".format(len(normalized)))
+        print('defining...')
         definitions = dict()
         for word in normalized:
             try:
                 definitions[word] = self.definer.define(word)
-                print("word `{word}` is defined".format(word=word))
+                if self.verbose:
+                    print("word `{}` defined".format(word))
             except NotFoundException:
-                print("word `{word}` is not found".format(word=word))
-
+                if self.verbose:
+                    print("word `{}` not found".format(word))
         print("number of words defined: {} out of {}".format(len(definitions), len(normalized)))
         return definitions
 
