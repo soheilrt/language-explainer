@@ -7,7 +7,7 @@ from utils.encoders import WordDefinitionJsonEncoder
 
 
 class JsonFileWriter(Writer):
-    def __init__(self, file_name: str, indent=4, sort_keys=True, ensure_ascii=False):
+    def __init__(self, file_name: str, indent=None, sort_keys=True, ensure_ascii=False):
         self.file = open(file_name, 'w')
         self.indent = indent
         self.sort_keys = sort_keys
