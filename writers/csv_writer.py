@@ -16,6 +16,7 @@ class CSVWriter(Writer):
         'examples',
         'synonyms',
         'antonyms',
+        'translations',
     ]
 
     def __init__(self, file_name: str):
