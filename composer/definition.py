@@ -31,9 +31,9 @@ class DefinitionComposer(Composer):
         Compose definition
         """
         tokenized = self.tokenizer.tokenize(reader.read())
-        print("number of tokens: " + str(len(tokenized)))
+        print("number of words that found: " + str(len(tokenized)))
         normalized = self.__normalize_data(tokenized)
-        print("number of tokens after normalization: " + str(len(normalized)))
+        print("number of words after normalization: " + str(len(normalized)))
 
         for middleware in self.middlewares:
             normalized, excluded = middleware.validate(normalized)
