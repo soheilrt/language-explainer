@@ -17,3 +17,4 @@ tqdm==4.62.3
 urllib3==1.26.7
 
 beautifulsoup4~=4.10.0
+PyPDF2~=1.26.0
