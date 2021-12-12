@@ -7,6 +7,7 @@ This tool helps you find and extract hard words
 from a `TEXT` or `PDF` file (maybe `audio files` in future).
 Ultimately, it would download words' definition from [Google](https://translate.google.com)/[FreeDictionaryAPI](https://dictionaryapi.dev/) and save it to file in either JSON or CSV format.
 
+This tool is useful Especially when used with flashcards applications like [ANKI](https://apps.ankiweb.net/)
 
 ## How to install
 1. Clone this project 
