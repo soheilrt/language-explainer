@@ -47,6 +47,7 @@ class DefinitionComposer(Composer):
             except NotFoundException:
                 print("word `{word}` is not found".format(word=word))
 
+        print("number of words defined: {} out of {}".format(len(definitions), len(normalized)))
         return definitions
 
     def compose_write(self, reader: Reader, writer: Writer) -> None:
