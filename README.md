@@ -5,7 +5,8 @@ A tool for defining/translating hard words for language learners.
 This tool helps you find and extract hard words 
 (based on their [CEFR](https://www.coe.int/en/web/common-european-framework-reference-languages/level-descriptions) levels) 
 from a `TEXT` or `PDF` file (maybe `audio files` in future).
-Ultimately, it would download words' definition from [Google](translate.google.com)/[FreeDictionaryAPI](https://dictionaryapi.dev/) and save it to file in either JSON or CSV format.
+Ultimately, it would download words' definition from [Google](https://translate.google.com)/[FreeDictionaryAPI](https://dictionaryapi.dev/) and save it to file in either JSON or CSV format.
+
 
 ## How to install
 1. Clone this project 
@@ -31,7 +32,7 @@ pip install -r requirements.txt
 
 5. Run 
 ```bash
-python explain --input-type (url|pdf|text) -input <file_name|url_address> -output <output_file_name) -output-type (csv|json)
+python explain.py --input-type (url|pdf|text) -input <file_name|url_address> -output <output_file_name) -output-type (csv|json)
 ```
 
 ## Simple JSON output format
