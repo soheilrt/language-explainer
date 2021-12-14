@@ -79,7 +79,7 @@ class CEFRLimiter(Middleware):
             if value == self.__LEVELS__[self.__UNKNOWN_LEVEL]:
                 return not self.__filter_unknowns
 
-            if value <= self.__min_cefr:
+            if value < self.__min_cefr:
                 return False
             if value > self.__max_cefr:
                 return False
