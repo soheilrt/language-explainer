@@ -19,15 +19,19 @@ class CSVWriter(Writer):
         'translations',
     ]
 
-    def __init__(self, file_name: str):
+    def __init__(self, file_name: str, write_header: bool = False):
         super().__init__()
         self.__file_name = file_name
+        self.__write_header = write_header
 
     def write(self, data: Dict[str, List[WordDefinition]]):
         print("writing to csv, total {} words...".format(len(data)))
 
         with open(self.__file_name, 'w', newline='') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=self.__field_names)
+
+            if self.__write_header:
+                writer.writeheader()
 
             word: str
             for word in data.keys():
