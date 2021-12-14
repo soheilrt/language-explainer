@@ -37,31 +37,34 @@ class CSVWriter(Writer):
 
                 writer.writerow({
                     'word': word,
-                    'phonetics': ' | '.join(
+                    'phonetics': ' |-|-| '.join(
                         phonetic.phonetic for phonetic in definition.phonetics
                     ),
-                    'phonetic audios': ' | '.join(
+                    'phonetic audios': ' |-|-| '.join(
                         url.normalize(phonetic.audio) for phonetic in definition.phonetics
                     ),
-                    'part of speeches': ' | '.join(
+                    'part of speeches': ' |-|-| '.join(
                         meaning.parOfSpeech for meaning in definition.meanings if meaning.parOfSpeech
                     ),
-                    'definitions': ' \n '.join(
-                        ', '.join(str(d.definition) for d in meaning.definitions) for meaning in definition.meanings
+                    'definitions': ' |-|-| '.join(
+                        ' ### '.join(str(d.definition) for d in meaning.definitions)
+                        for meaning in definition.meanings if meaning.definitions
                     ),
-                    'examples': ' | '.join(
-                        ', '.join(d.example for d in meaning.definitions) for meaning in definition.meanings
+                    'examples': ' |-|-| '.join(
+                        ' ### '.join(d.example for d in meaning.definitions)
+                        for meaning in definition.meanings if any(d.example for d in meaning.definitions)
+
                     ),
-                    'synonyms': ' | '.join(
-                        ', '.join(', '.join(d.synonyms) for d in meaning.definitions if d.synonyms)
+                    'synonyms': ' |-|-| '.join(
+                        ' ### '.join(', '.join(d.synonyms) for d in meaning.definitions if d.synonyms)
                         for meaning in definition.meanings if any(d.synonyms for d in meaning.definitions)
                     ),
-                    'antonyms': ' | '.join(
-                        ', '.join(', '.join(d.antonyms) for d in meaning.definitions if d.antonyms)
+                    'antonyms': ' |-|-| '.join(
+                        ' ### '.join(', '.join(d.antonyms) for d in meaning.definitions if d.antonyms)
                         for meaning in definition.meanings if any(d.antonyms for d in meaning.definitions)
                     ),
-                    'translations': ' | '.join(
-                        "{}: {}".format(translation.partOfSpeech, translation.translation)
-                        for translation in definition.translations
+                    'translations': ' |-|-| '.join(
+                        "{}: {} ### ".format(translation.partOfSpeech, translation.translation)
+                        for translation in definition.translations if translation.translation
                     )
                 })
