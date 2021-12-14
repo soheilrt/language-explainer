@@ -39,6 +39,7 @@ def get_arguments() -> argparse.Namespace:
         '-ot', '--output-type', help='the output file type, Default = json', type=str,
         choices=['json', 'csv'], default='json'
     )
+    parser.add_argument('--csv-write-header', help='write header in csv output', action='store_true')
     parser.add_argument(
         '--cefr-level', help='minimum word\'s cefr level to consider, default = B1', type=str,
         choices=['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], default='B1'
@@ -49,6 +50,24 @@ def get_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         '-v', '--verbose', help='verbose mode', default=False, action='store_true'
+    )
+
+    parser.add_argument(
+        '--disable-meaningful-words-filter',
+        help='by default we try to filter out meaningless words, this option disable it',
+        action='store_true'
+    )
+
+    parser.add_argument(
+        '--char-limiter-min-length',
+        help='minimum length of the word to consider, default = 3',
+        type=int, default=3
+    )
+
+    parser.add_argument(
+        '--disable-char-limiter-filter',
+        help='by default we try to filter out words with too few characters, this option disable it',
+        action='store_true'
     )
     args = parser.parse_args()
     return args
@@ -89,12 +108,15 @@ def get_tokenizer(_: argparse.Namespace) -> Tokenizer:
 
 
 def get_middlewares(args: argparse.Namespace) -> List[Middleware]:
-    return [
-        Number(),
-        CharLengthValidator(min_length=3),
-        MeaningfulWords(),
-        CEFRLimiter(min_cefr=args.cefr_level, filter_unknowns=args.ignore_unknown_cefr)
+    rules = [
+        (Number(), True),
+        (CharLengthValidator(min_length=args.char_limiter_min_length), not args.disable_char_limiter_filter),
+        (MeaningfulWords(), not args.disable_meaningful_words_filter),
+        (CEFRLimiter(min_cefr=args.cefr_level, filter_unknowns=not args.ignore_unknown_cefr),
+         not args.disable_meaningful_words_filter)
     ]
+
+    return list(rule[0] for rule in rules if rule[1])
 
 
 def get_definer(_: argparse.Namespace) -> Definer:
