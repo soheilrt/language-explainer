@@ -1,3 +1,4 @@
+import re
 from typing import List
 
 from models.middleware import Middleware
@@ -6,17 +7,13 @@ from models.middleware import Middleware
 class Number(Middleware):
     def validate(self, data: List[str]) -> (List[str], int):
         """
-        Validate the data and exclude only numbers data.
+        validate data and exclude tokens that contain numbers with regex
 
         :param data: The data to validate.
         :return: The validated data and the number of errors.
         """
-        errors = 0
-        validated_data = []
-        for item in data:
-            try:
-                int(item)
-                errors += 1
-            except ValueError:
-                validated_data.append(item)
-        return validated_data, errors
+        regex: re.Pattern = re.compile(r'\d')
+
+        result = [token for token in data if not regex.match(token)]
+
+        return result, len(data) - len(result)
